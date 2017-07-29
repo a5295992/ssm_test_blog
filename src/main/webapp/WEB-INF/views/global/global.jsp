@@ -22,5 +22,10 @@
 
 <script type="text/javascript" src="${statics }/jquery/jquery-2.1.1.js"></script>
 
-
+<!--常用js 变量 -->
+<script type="text/javascript">
+	var headpath ="${headpath}";/*  全局 地址*/
+	var statics="${statics}";   /*  全局静态文件访问地址 */
+	var statics_views_modules ="${statics_views_modules}";
+</script>
 

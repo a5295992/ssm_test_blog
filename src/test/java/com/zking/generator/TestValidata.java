@@ -14,12 +14,10 @@ public class TestValidata {
 	
 	private ClassPathXmlApplicationContext app;
 	
-	@Before
 	public void setUp(){
 		app = new ClassPathXmlApplicationContext(path);
 		
 	}
-	@Test
 	public void testValidata(){
 		
 		User user = new User();
@@ -30,6 +28,9 @@ public class TestValidata {
 		Validator v  = app.getBean("validator",Validator.class);
 		System.out.println(v);
 		System.out.println(v.validate(user).isEmpty());
+		
+	}
+	public void testGet$(){
 		
 	}
 }

@@ -9,9 +9,15 @@ package com.zking.constants;
  */
 public class LocationConstants {
 	
-//	public static String skin = "default";
+	
+	
+	//	public static String skin = "default";
 	//前台
 	public static String LOGIN= "modules/login/login_02";
 	//后台
 	public static String ALOGIN= "modules/login/login_01";
+	//后台首页
+	public static final String AINDEX = "modules/a/index_01";
+	
+	
 }

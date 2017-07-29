@@ -35,7 +35,7 @@
 				<li id="verifyCode" style="display: block;"><input id="valid"
 					name="rand" placeholder="请输入验证码" maxlength="4"> <span
 					id="validcode"> <img id="verifyCodePic" id="img_captcha"
-						src="/img/jcaptcha.jpg">
+						src="${headpath}/getValidateImage">
 				</span> <span id="changeimg"> 换一张 </span></li>
 				<li><button id="login">立即登录</button></li>
 				<li><span id="err" style="display: inline-block;">密码错误</span></li>

@@ -25,7 +25,7 @@ function init() {
 		}
 	});
 	$('#changeimg').click(function() {
-		$('#verifyCodePic')[0].src = pat+'/jcaptcha.jpg?' + Math.random();
+		$('#verifyCodePic')[0].src = headpath+'/getValidateImage?' + Math.random();
 		return false;
 	});
 }
