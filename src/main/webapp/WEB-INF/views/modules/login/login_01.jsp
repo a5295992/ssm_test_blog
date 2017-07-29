@@ -25,11 +25,11 @@
 	<div id="sky"></div>
 	<div id="head"></div>
 	<div id="middle">
-		<form action="login" method="post">
+		<form action="ajaxLogin" method="post" id="login_form">
 			<ul style="text-align: center;">
 				<li style="font-size: 48px">随心博客管理</li>
 
-				<li><input class="name" name="username" placeholder="请输入用户名"></li>
+				<li><input class="name" name="userName" placeholder="请输入用户名"></li>
 				<li><input type="password" name="password" class="pwd"
 					placeholder="请输入密码"></li>
 				<li id="verifyCode" style="display: block;"><input id="valid"
@@ -49,5 +49,8 @@
 	<div id="cloud"></div>
 </body>
 <script type="text/javascript">
+	$("#login").click(function(){
+		$("#login_form").submit();
+	});
 </script>
 </html>

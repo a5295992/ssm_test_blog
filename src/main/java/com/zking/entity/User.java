@@ -1,5 +1,6 @@
 package com.zking.entity;
 
+import javax.validation.constraints.NotNull;
 
 public class User {
     /**
@@ -18,6 +19,7 @@ public class User {
      *
      * @mbg.generated Fri Jul 28 19:44:21 CST 2017
      */
+    @NotNull(message="名字不能为空")
     private String userName;
 
     /**

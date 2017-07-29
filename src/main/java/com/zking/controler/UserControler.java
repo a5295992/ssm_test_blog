@@ -1,6 +1,8 @@
 package com.zking.controler;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zking.constants.AnRequest;
@@ -29,8 +31,9 @@ public class UserControler {
 		return LocationConstants.ALOGIN;
 	}
 	@RequestMapping(AnRequest.AJAXLOGIN)
-	public String login(User user){
-		String message = "";
+	public String login(@Validated User user,BindingResult result){
+		String message = "...."+result;
+		System.out.println(message);
 		return message ;
 	}
 }
