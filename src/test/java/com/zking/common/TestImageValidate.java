@@ -5,19 +5,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.zking.commom.ValidateCode;
+import org.junit.Test;
+
+
 
 public class TestImageValidate {
 	
-	
+	@Test
 	public void testGenerator() throws IOException{
-		String path = "imgas.png";//图片生成路径
+//		String path = "imgas.png";//图片生成路径
 		
-		OutputStream os = new FileOutputStream(new File(path));
-		ValidateCode  gen = new ValidateCode();
+//		OutputStream os = new FileOutputStream(new File(path));
+//		ValidateCode  gen = new ValidateCode();
 		
-		gen.write(os );
-		os.flush();
-		os.close();
+//		gen.write(os );
+//		os.flush();
+//		os.close();
 	}
 }

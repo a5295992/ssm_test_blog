@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zking.commom.UserUtils;
 import com.zking.commom.ValidateCode;
@@ -31,7 +32,6 @@ public class LoginControler extends BaseController {
 	private LoginService loginService;
 	@Autowired
 	private SessionDao sessionDAO;
-
 	/**
 	 * 前台登录 /login
 	 * 
@@ -77,12 +77,13 @@ public class LoginControler extends BaseController {
 	 * @param result
 	 * @return
 	 */
-	@RequestMapping(value = AnRequest.AJAXLOGIN, method = RequestMethod.POST)
+	@ResponseBody
+	@RequestMapping(value = AnRequest.AJAXLOGIN, method = RequestMethod.POST,
+		produces="text/html;charset=UTF-8;")
 	public String login(@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "password") String password,
 			@RequestParam(value = "validate") String validate,
 			HttpServletRequest request) {
-		String stauts = "";
 		// 验证验证码
 		if (validata(validate, request)) {
 			ShiroUser shiroUser = UserUtils.getUser();// 获取当前用户
@@ -93,12 +94,13 @@ public class LoginControler extends BaseController {
 			try {
 				loginService.login(userName, password, request);
 			} catch (AuthFailException e) {
-				stauts = e.getMessage();
+				return fault+e.getMessage();
 			}
 		} else {
-			stauts = "msg:验证码错误";
+			return fault+"验证码错误";
 		}
-		return stauts;
+		
+		return success;
 	}
 
 	/**
@@ -140,8 +142,8 @@ public class LoginControler extends BaseController {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		HttpSession session = req.getSession();
-		ValidateCode vCode = new ValidateCode(120, 40, 5, 100);
-		session.setAttribute("code", vCode.getCode());
+		ValidateCode vCode =new ValidateCode(120,40,5,100);
+		session.setAttribute("code", vCode .getCode());
 		OutputStream os = response.getOutputStream();
 		vCode.write(os);
 		os.close();

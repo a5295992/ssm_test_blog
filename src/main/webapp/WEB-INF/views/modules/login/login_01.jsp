@@ -25,18 +25,21 @@
 	<div id="sky"></div>
 	<div id="head"></div>
 	<div id="middle">
-		<form action="ajaxLogin" method="post" id="login_form">
+		<form  method="post" id="login_form">
 			<ul style="text-align: center;">
 				<li style="font-size: 48px">随心博客管理</li>
 
 				<li><input class="name" name="userName" placeholder="请输入用户名"></li>
 				<li><input type="password" name="password" class="pwd"
 					placeholder="请输入密码"></li>
-				<li id="verifyCode" style="display: block;"><input id="valid"
-					name="rand" placeholder="请输入验证码" maxlength="4"> <span
-					id="validcode"> <img id="verifyCodePic" id="img_captcha"
+				<li id="verifyCode" style="display: block;">
+					<input id="valid"
+					name="validate" placeholder="请输入验证码" maxlength="5"> 
+					<span id="validcode">
+					 <img id="verifyCodePic" id="img_captcha"
 						src="${headpath}/getValidateImage">
-				</span> <span id="changeimg"> 换一张 </span></li>
+					</span> 
+					<span id="changeimg"> 换一张 </span></li>
 				<li><button id="login">立即登录</button></li>
 				<li><span id="err" style="display: inline-block;">密码错误</span></li>
 			</ul>
@@ -48,9 +51,5 @@
 	</div>
 	<div id="cloud"></div>
 </body>
-<script type="text/javascript">
-	$("#login").click(function(){
-		$("#login_form").submit();
-	});
-</script>
+
 </html>

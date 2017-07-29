@@ -28,4 +28,6 @@
 	var statics="${statics}";   /*  全局静态文件访问地址 */
 	var statics_views_modules ="${statics_views_modules}";
 </script>
+<script type="text/javascript" src="${headpath }/statics/global/global.js"></script>
+
 

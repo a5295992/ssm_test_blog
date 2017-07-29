@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ValidateCode {
 	// 图片的宽度。
-	private int width = 160;
+	private int width = 120;
 	// 图片的高度。
-	private int height = 40;
+	private int height = 38;
 	// 验证码字符个数
 	private int codeCount = 5;
 	// 验证码干扰线数
