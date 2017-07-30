@@ -6,10 +6,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class ContextHodler {
 	private static final String contextPath = "classpath:spring-context.xml";
 	
-	private static ApplicationContext app;
 	
+	private static ApplicationContext app;
+	static
 	{
-		app =new ClassPathXmlApplicationContext(contextPath);
+		app =new ClassPathXmlApplicationContext(new String[]{contextPath});
 	}
 	public static <T> T getBean(Class<T>  clazz){
 		

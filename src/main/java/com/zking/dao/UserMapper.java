@@ -127,5 +127,5 @@ public interface UserMapper {
      * @param userName
      * @return 可用 0 | 封号 1 
      */
-    public Integer getFlagByUserName(String userName);
+    public Integer getFlagByUserName(@Param(value="userName")String userName);
 }

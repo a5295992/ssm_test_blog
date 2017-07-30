@@ -25,7 +25,7 @@
 	<div id="sky"></div>
 	<div id="head"></div>
 	<div id="middle">
-		<form  method="post" id="login_form">
+		<form id="login_form">
 			<ul style="text-align: center;">
 				<li style="font-size: 48px">随心博客管理</li>
 
@@ -40,8 +40,8 @@
 						src="${headpath}/getValidateImage">
 					</span> 
 					<span id="changeimg"> 换一张 </span></li>
-				<li><button id="login">立即登录</button></li>
-				<li><span id="err" style="display: inline-block;">密码错误</span></li>
+				<li><input id="login" value="立即登录" type="button"></li>
+				<li><span id="err" style="display: inline-block;"></span></li>
 			</ul>
 		</form>
 	</div>

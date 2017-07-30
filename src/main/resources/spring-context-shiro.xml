@@ -13,7 +13,6 @@
 		<constructor-arg>
 			<value>
 			<!-- anon |cas |authc |logout |user perms[student:login]|roles[teacher]-->
-			${index.path}/**=authc
 			${student.path}/**=authc
 			</value>
 		</constructor-arg>
@@ -23,7 +22,7 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" /><!-- 
 		<property name="loginUrl" value="${cas.server.url}?service=${cas.project.url}${adminPath}/cas" /> -->
-		<property name="loginUrl" value="/login" />
+		<property name="loginUrl" value="/a/login" />
 		<property name="successUrl" value="/test.jsp" />
 		<property name="unauthorizedUrl" value="/test.jsp"></property>
 		<property name="filters">
@@ -38,7 +37,7 @@
 	</bean>
 	<!--cas 单点登录  -->
 	<bean id="casFilter" class="org.apache.shiro.cas.CasFilter">  
-		<property name="failureUrl" value="/login"/>
+		<property name="failureUrl" value="/a/login"/>
 	</bean>
 	<!-- securityManager -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">

@@ -11,19 +11,19 @@ var $ajaxLogin =headpath+ "/ajaxLogin";	//后台 登录 地址(表单)
 //@param  loginUrl 表单 提交地址
 //@Author Along 2017-7-29
 function submitAjaxForm(loginForm,loginUrl){
+	var result="";
 	$.ajax({
         cache: true,
-        type: 	"POST",
-        url:	loginUrl,
-        data:	loginForm.serialize(),// 你的formid
-        async: false,
+        type: "POST",
+        url:loginUrl,
+        data:loginForm.serialize(),// 你的formid
+        async:false,
         error: function(request) {
             window.confirm("抱歉！ 服务器繁忙");
         },
         success: function(data) {
-        	alert(data);
-        	return data.split(":");
+        	result =result+data;
         }
     });
-	return "3:no respone";
+	return result;
 };

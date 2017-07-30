@@ -32,6 +32,7 @@ public class LoginControler extends BaseController {
 	private LoginService loginService;
 	@Autowired
 	private SessionDao sessionDAO;
+
 	/**
 	 * 前台登录 /login
 	 * 
@@ -47,11 +48,11 @@ public class LoginControler extends BaseController {
 	 * 
 	 * @return views/ ..jsp
 	 */
-	@RequestMapping(value = AnRequest.ALOGIN, method = RequestMethod.GET)
+	@RequestMapping(value = AnRequest.ALOGIN)
 	public String toALogin() {
 		ShiroUser shiroUser = UserUtils.getUser();
 
-		if (log.isDebugEnabled()&& shiroUser !=null) {
+		if (log.isDebugEnabled() && shiroUser != null) {
 			log.debug("当前 活跃的 sessio 大小为"
 					+ sessionDAO.getActiveSessions().size());
 			log.debug("当前 活跃的 sessio 名"
@@ -78,8 +79,7 @@ public class LoginControler extends BaseController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = AnRequest.AJAXLOGIN, method = RequestMethod.POST,
-		produces="text/html;charset=UTF-8;")
+	@RequestMapping(value = AnRequest.AJAXLOGIN, produces = "text/html;charset=UTF-8;")
 	public String login(@RequestParam(value = "userName") String userName,
 			@RequestParam(value = "password") String password,
 			@RequestParam(value = "validate") String validate,
@@ -94,12 +94,12 @@ public class LoginControler extends BaseController {
 			try {
 				loginService.login(userName, password, request);
 			} catch (AuthFailException e) {
-				return fault+e.getMessage();
+				return fault + e.getMessage();
 			}
 		} else {
-			return fault+"验证码错误";
+			return fault + "验证码错误";
 		}
-		
+
 		return success;
 	}
 
@@ -142,8 +142,8 @@ public class LoginControler extends BaseController {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setDateHeader("Expires", 0);
 		HttpSession session = req.getSession();
-		ValidateCode vCode =new ValidateCode(120,40,5,100);
-		session.setAttribute("code", vCode .getCode());
+		ValidateCode vCode = new ValidateCode(120, 40, 5, 100);
+		session.setAttribute("code", vCode.getCode());
 		OutputStream os = response.getOutputStream();
 		vCode.write(os);
 		os.close();

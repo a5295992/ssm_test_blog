@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -42,6 +43,7 @@ public class MyRealm extends AuthorizingRealm {
 	@Autowired
 	private PermissionMapper pMapper;
 	
+	private static Logger log = Logger.getLogger(MyRealm.class);
 	/**
 	 * 权限验证
 	 */
@@ -101,7 +103,9 @@ public class MyRealm extends AuthorizingRealm {
 		String userName = token_.getUsername();
 		String password = new String(token_.getPassword());
 		// 比对 数据库中的信息 与 令牌中的信息是否一致
+		log.debug(userName+"--------"+password);
 		User user = passwordAndUserNameIsRight(userName, password);
+		log.debug(user+"--------"+password);
 		// 创建 身份信息
 		SimpleAuthenticationInfo infor = createAuthInfor(token_, user);
 		return infor;
@@ -116,7 +120,7 @@ public class MyRealm extends AuthorizingRealm {
 		List<User> users = userMapper.selectByExample(userExample);
 		User user = null;
 		if (users != null && users.size() > 0) {
-			user = users.get(1);
+			user = users.get(0);
 		}
 		return user;
 	}
@@ -124,7 +128,9 @@ public class MyRealm extends AuthorizingRealm {
 	private SimpleAuthenticationInfo createAuthInfor(
 			UsernamePasswordToken token_, User user) {
 		SimpleAuthenticationInfo infor = null;
+		log.debug("------------infor-----ce1---------");
 		if (user != null) {
+			log.debug(user+"------------infor-----ce1---------");
 			String host = token_.getHost();
 			infor = new SimpleAuthenticationInfo(new ShiroUser(
 					user.getUserName(), user.getUserCname(), user.getUserId(),
