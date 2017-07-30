@@ -8,12 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.zking.commom.UserUtils;
 import com.zking.commom.ValidateCode;
@@ -48,6 +51,7 @@ public class LoginControler extends BaseController {
 	 * 
 	 * @return views/ ..jsp
 	 */
+	
 	@RequestMapping(value = AnRequest.ALOGIN)
 	public String toALogin() {
 		ShiroUser shiroUser = UserUtils.getUser();
@@ -62,11 +66,11 @@ public class LoginControler extends BaseController {
 		// 如果 已经登录 再进入登录页 则退出原账号
 		String location = "";
 		if (shiroUser != null) {
-			location = LocationConstants.AINDEX;// 登录首页
+			location = "redirect:"+AnRequest.AIndex;
+		}else {
+			// 未登录
+			location = LocationConstants.ALOGIN;
 		}
-		// 未登录
-		location = LocationConstants.ALOGIN;
-
 		return location;
 	}
 
@@ -88,7 +92,7 @@ public class LoginControler extends BaseController {
 		if (validata(validate, request)) {
 			ShiroUser shiroUser = UserUtils.getUser();// 获取当前用户
 			if (shiroUser != null) {
-				return "redirect:" + adminPath;
+				return "3:" + "您已使用 :" +shiroUser.getUserName()+ "在线！";
 			}
 			// 如果 当前用户 获取为空 进行登录操作
 			try {
@@ -117,15 +121,28 @@ public class LoginControler extends BaseController {
 
 	/**
 	 * 退出操作
-	 * 
+	 * 统一退出操作 入口
 	 * @return
 	 */
-	@RequestMapping(value = AnRequest.AJAXLOGIN, method = RequestMethod.GET)
+	@ResponseBody
+	@RequestMapping(value = AnRequest.LOGINOUT, method = RequestMethod.GET,
+			produces = "text/html;charset=UTF-8;")
 	public String logOut() {
-
-		return "";
+		//获取当前 用户信息
+		ShiroUser shiroUser  = UserUtils.getUser();
+		//如果 当前用户不为空 则执行 操作
+		if(shiroUser != null){
+			//清除登录信息
+			//如果有缓存 则 移除缓存 
+			//清空 会话内容
+			loginService.logout(SecurityUtils.getSubject());
+		}else {
+			//否则 ： 本次请求无效
+			return "3:您未登录 或该账号已经退出";
+		}
+		
+		return "0:操作成功[退出账号 "+shiroUser.getUserName()+"]";
 	}
-
 	/**
 	 * 验证码生成器
 	 * 
@@ -147,5 +164,16 @@ public class LoginControler extends BaseController {
 		OutputStream os = response.getOutputStream();
 		vCode.write(os);
 		os.close();
+	}
+	
+	/**
+	 * 进入 后台主页 入口
+	 * @return 后台主页
+	 */
+	@RequestMapping(value=AnRequest.AIndex)
+	public ModelAndView toAIndex(){
+		
+		
+		return new ModelAndView();
 	}
 }

@@ -14,8 +14,11 @@
    diskExpiryThreadIntervalSeconds="120"
    memoryStoreEvictionPolicy="LRU">
  </defaultCache>
+  <!-- 系统缓存 -->
+<cache name="mycache" maxEntriesLocalHeap="1000" eternal="true" overflowToDisk="true" statistics="true">
+		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+</cache>
 </ehcache>
- 
 <!-- 
 属性说明：
 l diskStore：指定数据在磁盘中的存储位置。

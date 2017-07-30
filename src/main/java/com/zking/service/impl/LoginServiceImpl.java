@@ -11,7 +11,9 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zking.commom.CacheUtils;
 import com.zking.commom.MD5Encode;
+import com.zking.commom.UserUtils;
 import com.zking.dao.UserMapper;
 import com.zking.exception.AuthFailException;
 import com.zking.service.LoginService;
@@ -28,6 +30,8 @@ public class LoginServiceImpl implements LoginService {
 	private String rememberMe = DEFAULT_REMEMBERME;
 
 	private Logger log = Logger.getLogger(LoginServiceImpl.class);
+	
+	private String userCache = "userCache";
 
 	@Autowired
 	private UserMapper userMapper;// 用户 mapper
@@ -85,6 +89,22 @@ public class LoginServiceImpl implements LoginService {
 			return (boolean) isRemember;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+	
+	
+	/**
+	 * 退出 当前账号
+	 * @param subject 当前用户
+	 * 
+	 */
+	public void logout(Subject subject) {
+		try {
+			subject.logout();
+			subject.getSession().stop();
+			CacheUtils.removeCache(userCache,UserUtils.getUser().getUserName());
+		} catch (Exception e) {
+			log.error(e);
 		}
 	}
 }

@@ -2,6 +2,8 @@ package com.zking.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.subject.Subject;
+
 import com.zking.exception.AuthFailException;
 
 public interface LoginService {
@@ -15,6 +17,13 @@ public interface LoginService {
 	 */
 	void login(String userName, String password,
 			HttpServletRequest request) throws AuthFailException;
+	
+	/**
+	 * 退出 当前账号
+	 * @param subject 当前用户
+	 * 
+	 */
+	void logout(Subject subject );
 
 	
 }
