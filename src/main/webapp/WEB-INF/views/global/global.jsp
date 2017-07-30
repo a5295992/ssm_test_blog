@@ -5,6 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--jstl 函数  -->
 <%@ taglib prefix="func"  uri="http://java.sun.com/jsp/jstl/functions"%>
+<!--安全验证标签  -->
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <!--http代称  schame|  (http)|serverName |IP  port 端口号 |contextPath |项目名-->
 <c:set var ="schame" value="${pageContext.request.scheme}"></c:set>

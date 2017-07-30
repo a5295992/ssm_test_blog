@@ -2,11 +2,12 @@ package com.zking.generator;
 
 import javax.validation.Validator;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.zking.commom.Page;
+import com.zking.commom.QueryCondition;
 import com.zking.entity.User;
+import com.zking.service.UserService;
 
 public class TestValidata {
 	
@@ -31,6 +32,16 @@ public class TestValidata {
 		
 	}
 	public void testGet$(){
+		UserService userService = app.getBean(UserService.class);
 		
+		QueryCondition queryCondition = new QueryCondition(0, 1);
+		
+		Page<User> page = userService.getPage(queryCondition );
+		
+		if(page!=null){
+			for (User  user : page.getList()) {
+				System.out.println(user);
+			}
+		}
 	}
 }
