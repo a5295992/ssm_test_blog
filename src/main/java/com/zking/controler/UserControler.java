@@ -1,7 +1,5 @@
 package com.zking.controler;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSONArray;
 
 import org.apache.log4j.Logger;
@@ -15,10 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.zking.commom.Page;
 import com.zking.commom.QueryCondition;
+import com.zking.commom.UserUtils;
 import com.zking.constants.AnRequest;
 import com.zking.constants.LocationConstants;
 import com.zking.constants.PermissionAndRoleConstant;
 import com.zking.entity.User;
+import com.zking.security.entity.ShiroUser;
 import com.zking.service.UserService;
 
 /**
@@ -34,7 +34,18 @@ public class UserControler {
 	@Autowired
 	private UserService userService;// 用户service
 	private Logger log = Logger.getLogger(LoginControler.class);
-
+	
+	/**
+	 *  欢迎页面
+	 * @return
+	 */
+	@RequestMapping(value="/a/welecom")
+	public ModelAndView welecome(){
+		//获取当前用户
+		ShiroUser user = UserUtils.getUser();
+		
+		return new ModelAndView("welecom").addObject("user",user);
+	}
 	/**
 	 * 获取 用户所有信息 GET方式
 	 * AOP 权限 检查  权限为 管理员 要求通过
@@ -55,10 +66,13 @@ public class UserControler {
 	 *            自定义 查询条件对象
 	 * @return 返回 相应数据和页面
 	 */
-	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
 	@ResponseBody
-	@RequestMapping(value = AnRequest.AUSERSS, method = RequestMethod.GET)
+	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
+	@RequestMapping(value = AnRequest.AUSERSS,produces = "text/html;charset=UTF-8;")
 	public String getUsers1(Integer page,Integer rows) {
+		page =page -1;
+		log.debug("pages "+page+"hangshu " +rows);
+		//分页插件 开始 是1
 		QueryCondition queryCondition =new QueryCondition(page,rows);
 		// 权限验证通过
 		Page<User> users = userService.getPage(queryCondition );
@@ -66,4 +80,5 @@ public class UserControler {
 		log.debug(json);
 		return json.toString();
 	}
+	
 }

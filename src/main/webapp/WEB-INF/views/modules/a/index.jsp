@@ -73,10 +73,8 @@
 		</div>
 		<div data-options="region:'center',title:'待办事项',iconCls:'icon-ok'">
 			<div class="easyui-tabs" data-options="fit:true,border:false,plain:true" id="tt">
-				<div title="欢迎页" data-options="href:'_content.html'" style="padding:10px"></div>
-				<div title="DataGrid" style="padding:5px">
-					
-				</div>
+				<div title="欢迎页" data-options="href:'${headpath }/a/a/welecom'" style="padding:10px"></div>
+				
 			</div>
 		</div>
   </body>

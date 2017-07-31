@@ -33,7 +33,7 @@ public class Page<T> implements Serializable {
 	public Page(int pageCount, int count, int pageNum) {
 		this.pageCount = pageCount;
 		this.count = count;
-		this.pageNum = pageNum;
+		this.pageNum = pageNum-1;
 		if (count % pageCount == 0) {
 			page = count / pageCount;
 		} else {
