@@ -17,7 +17,8 @@ public class LocationConstants {
 	//后台
 	public static String ALOGIN= "modules/login/login_01";
 	//后台首页
-	public static final String AINDEX = "modules/a/index_01";
+	public static final String AINDEX = "modules/a/index";
+	public static final String AUSERS = "modules/a/user/user_list";
 	
 	
 }

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,7 +65,7 @@ public class LoginControler extends BaseController {
 		// 如果 已经登录 再进入登录页 则退出原账号
 		String location = "";
 		if (shiroUser != null) {
-			location = "redirect:"+AnRequest.AIndex;
+			location = "redirect:"+AnRequest.AINDEX;
 		}else {
 			// 未登录
 			location = LocationConstants.ALOGIN;
@@ -170,10 +169,10 @@ public class LoginControler extends BaseController {
 	 * 进入 后台主页 入口
 	 * @return 后台主页
 	 */
-	@RequestMapping(value=AnRequest.AIndex)
+	@RequestMapping(value=AnRequest.AINDEX)
 	public ModelAndView toAIndex(){
 		
 		
-		return new ModelAndView();
+		return new ModelAndView(LocationConstants.AINDEX);
 	}
 }

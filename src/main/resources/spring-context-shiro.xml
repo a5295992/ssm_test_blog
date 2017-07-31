@@ -14,6 +14,7 @@
 			<value>
 			<!-- anon |cas |authc |logout |user perms[student:login]|roles[teacher]-->
 			${student.path}/**=authc
+			${admin.path}/**=authc
 			</value>
 		</constructor-arg>
 	</bean>

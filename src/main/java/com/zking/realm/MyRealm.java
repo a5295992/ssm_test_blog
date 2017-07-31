@@ -50,11 +50,13 @@ public class MyRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
 		ShiroUser user = (ShiroUser) principals.getPrimaryPrincipal();
+		log.info("身份验证: 当前登录用户["+user.getUserName());
 		// 根据 用户名获取所有角色
 		Set<String> roles = getAllRoles(user);
+		log.info("身份验证: 当前登录用户身份["+roles.toArray()[0]);
 		//根据 用户角色ID 获取  所有权限
 		Set<String> permissions = getPermissions(user);
-
+		
 		SimpleAuthorizationInfo infor = new SimpleAuthorizationInfo(roles);
 		infor.addStringPermissions(permissions);
 		return infor;

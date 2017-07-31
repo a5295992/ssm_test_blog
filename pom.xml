@@ -202,7 +202,7 @@
 	    <finalName>ssm_test</finalName>
 	    <plugins>
 				<!-- 第一种方式: apache官方tomcat插件,支持deploy -->
-			<!-- 	<plugin>
+			 <!-- 	<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.0-SNAPSHOT</version>
@@ -212,7 +212,7 @@
 					</configuration>
 				</plugin> -->
 				<!-- 第二种方式: 第三方tomcat插件,支持redeploy -->
-				<!-- --><plugin>
+				 <plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>tomcat-maven-plugin</artifactId>
 					<version>1.1</version>
