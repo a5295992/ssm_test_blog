@@ -17,8 +17,11 @@ import com.zking.commom.UserUtils;
 import com.zking.constants.AnRequest;
 import com.zking.constants.LocationConstants;
 import com.zking.constants.PermissionAndRoleConstant;
+import com.zking.entity.Role;
 import com.zking.entity.User;
 import com.zking.security.entity.ShiroUser;
+import com.zking.service.PermissionService;
+import com.zking.service.RoleService;
 import com.zking.service.UserService;
 
 /**
@@ -30,11 +33,14 @@ import com.zking.service.UserService;
 @Controller
 @RequestMapping(value = AnRequest.A)
 public class UserControler {
-
-	@Autowired
-	private UserService userService;// 用户service
 	private Logger log = Logger.getLogger(LoginControler.class);
 	
+	@Autowired
+	private UserService userService;// 用户service
+	@Autowired
+	private RoleService roleService;//角色 service
+	@Autowired
+	private PermissionService permissionService; //权限service
 	/**
 	 *  欢迎页面
 	 * @return
@@ -80,5 +86,64 @@ public class UserControler {
 		log.debug(json);
 		return json.toString();
 	}
-	
+	/**
+	 *  角色列表
+	 * @return
+	 */
+	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
+	@RequestMapping(value = AnRequest.AROLES, method = RequestMethod.GET)
+	public ModelAndView getRoles(){
+		
+		return new ModelAndView(LocationConstants.AROLES);
+	}
+	/**
+	 * 角色列表 数据
+	 * @param page 当前页码
+	 * @param rows 分页行数
+	 * @return
+	 */
+	@ResponseBody
+	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
+	@RequestMapping(value = AnRequest.AROLES)
+	public String getRoles(Integer page,Integer rows){
+		page =page -1;
+		log.debug("pages "+page+"hangshu " +rows);
+		//分页插件 开始 是1
+		QueryCondition queryCondition =new QueryCondition(page,rows);
+		// 权限验证通过
+		Page<Role> roles = roleService.getPage(queryCondition );
+		JSONArray json = JSONArray.fromObject(roles.getList());
+		log.debug(json);
+		return json.toString();
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
+	@RequestMapping(value = AnRequest.APERMISSIONS, method = RequestMethod.GET)
+	public ModelAndView getPermissions(){
+		
+		return new ModelAndView(LocationConstants.APERMISSIONS);
+	}
+	/**
+	 * 权限 数据
+	 * @param page 页码
+	 * @param rows 分页行数
+	 * @return
+	 */
+	@ResponseBody
+	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
+	@RequestMapping(value = AnRequest.APERMISSIONSS)
+	public String getPermissions(Integer page,Integer rows){
+		page =page -1;
+		log.debug("pages "+page+"hangshu " +rows);
+		//分页插件 开始 是1
+		QueryCondition queryCondition =new QueryCondition(page,rows);
+		// 权限验证通过
+		Page<Role> roles = roleService.getPage(queryCondition );
+		JSONArray json = JSONArray.fromObject(roles.getList());
+		log.debug(json);
+		return json.toString();
+	}
 }

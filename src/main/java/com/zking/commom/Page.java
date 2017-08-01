@@ -1,9 +1,7 @@
 package com.zking.commom;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 自定义 分页实现
@@ -33,7 +31,7 @@ public class Page<T> implements Serializable {
 	public Page(int pageCount, int count, int pageNum) {
 		this.pageCount = pageCount;
 		this.count = count;
-		this.pageNum = pageNum-1;
+		this.pageNum = pageNum;
 		if (count % pageCount == 0) {
 			page = count / pageCount;
 		} else {

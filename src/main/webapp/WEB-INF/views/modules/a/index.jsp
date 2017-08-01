@@ -20,7 +20,7 @@
   </head>
   <body class="easyui-layout">
    <div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">
-       				<a href="#" > 退出登录</a> &nbsp; &nbsp;随心博客管理
+       				<a href="${headpath }/loginOut" > 退出登录</a> &nbsp; &nbsp;随心博客管理
         </div>
 		<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">今天是 2017年7月30日</div>
 		<div data-options="region:'east',split:true" title="消息管理" style="width:180px;">
@@ -31,11 +31,11 @@
 				<div title="用户管理" style="padding:10px;">
 	                
 					<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-search"
-	                onclick="addTab('用户列表','${headpath}/a/users')">查看用户信息</a>
+	                onclick="addTab('用户列表','${headpath}/a/users')"> 查看用户信息</a>
 	                <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-lock"
-	                onclick="addTab('google','http://www.google.com')"> 违规用户信息</a>
+	                onclick="addTab('google','${headpath}/a/permissions')"> 权限管理</a>
 	                <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-commenting"
-	                onclick="addTab('google','http://www.google.com')">用户反馈信息</a>
+	                onclick="addTab('google','${headpath}/a/roles')"> 角色管理</a>
 	                <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-hourglass-1"
 	                onclick="addTab('google','http://www.google.com')">用户申请待批</a>
                 </div>

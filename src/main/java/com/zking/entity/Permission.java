@@ -1,5 +1,9 @@
 package com.zking.entity;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Permission {
     /**
      *
@@ -17,6 +21,8 @@ public class Permission {
      *
      * @mbg.generated Sat Jul 29 13:52:51 CST 2017
      */
+    @NotNull(message="权限名不能为空")
+    @NotEmpty(message="权限名不能为空")
     private String perName;
 
     /**

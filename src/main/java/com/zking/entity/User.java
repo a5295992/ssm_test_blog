@@ -1,5 +1,9 @@
 package com.zking.entity;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
     /**
      *
@@ -17,6 +21,8 @@ public class User {
      *
      * @mbg.generated Sat Jul 29 13:52:51 CST 2017
      */
+    @NotNull(message="用户名不能为空")
+    @NotEmpty(message="用户名不能为空")
     private String userName;
 
     /**

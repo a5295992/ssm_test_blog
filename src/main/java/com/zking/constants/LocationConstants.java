@@ -20,5 +20,9 @@ public class LocationConstants {
 	public static final String AINDEX = "modules/a/index";
 	public static final String AUSERS = "modules/a/user/user_list";
 	
+	public static final String AROLES = "modules/a/user/role_list";
+	public static final String APERMISSIONS = "modules/a/user/permission_list";
+	
+	
 	
 }
