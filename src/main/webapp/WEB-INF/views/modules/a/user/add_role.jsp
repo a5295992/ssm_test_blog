@@ -1,28 +1,24 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-  <head>
-    <base href="<%=basePath%>">
-    
-    <title>My JSP 'role_list.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-
-  </head>
-  
-  <body>
-    This is my JSP page. <br>
-  </body>
-</html>
+	<form style="padding:10px 20px 10px 40px;" id="form_update_role">
+	<table>
+				<tr>
+					<td>角色名:</td>
+					<td><input type="text" name="roleName"  value ="${role.roleName }" style="width:350px;"/></td>
+				</tr>
+				
+				<tr>
+					<td>父级角色:</td>
+					<td>
+						<td><select class="easyui-combotree" url="${headpath }/a/roless" name="proleName" style="width:156px;"/></td>
+					</td>
+				</tr>
+				<tr>
+					<td> </td>
+				   <td><div id="dlg-buttons">
+					<a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="update_('${role.roleId}')">保存</a>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#updateRole').dialog('close')">取消</a>
+				</div>
+				</tr>
+			</table>
+			<input name="roleId" value="${role.roleId }" type="hidden"/>
+	</form>

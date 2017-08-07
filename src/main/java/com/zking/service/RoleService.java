@@ -8,7 +8,8 @@ import com.zking.entity.Role;
  */
 @Service
 public interface RoleService extends BaseService<Role> {
-	
-	
+
+	Role getRoleByRoleName(String proleName);
+
 	
 }

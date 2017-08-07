@@ -93,4 +93,10 @@ public interface RoleMapper {
      * @mbg.generated Sat Jul 29 13:52:51 CST 2017
      */
     int updateByPrimaryKey(Role record);
+    
+    
+    /**
+     * edit by along
+     */
+    public List<Role> getRolesByPid(Integer pRid);
 }

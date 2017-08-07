@@ -13,11 +13,18 @@ public class AnRequest {
 	//实际 前缀 加上a
 	public static final String AUSERS = "/users";// /a/users所有用户列表
 	public static final String AUSERSS = "/userss";
+	
 	public static final String AROLES = "/roles";
+	public static final String AADDROLE = "/role/add";
+	public static final String ADELEROLE = "/role/dele";
+	public static final String AUPDATEROLE = "/role/update";
+	public static final String AUPDATEROLEAJAX = "/role/updatea";
+	public static final String AGETROLE = "/role/get";
 	public static final String AROLESS = "/roless";
 	
 	//权限
 	public static final String APERMISSIONS = "/permissions";
 	public static final String APERMISSIONSS = "/permissionss";
+	
 	
 }

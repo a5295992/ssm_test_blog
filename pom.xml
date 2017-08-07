@@ -199,7 +199,7 @@
   </dependencies>
    
   <build>
-	    <finalName>ssm_test</finalName>
+	    <finalName>ssm_test_blog</finalName>
 	    <plugins>
 				<!-- 第一种方式: apache官方tomcat插件,支持deploy -->
 			 <!-- 	<plugin>

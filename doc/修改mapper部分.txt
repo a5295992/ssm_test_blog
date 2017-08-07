@@ -1,0 +1,18 @@
+1.userMapper.xml 及 userMapper 
+ 摘要 :添加新的 字段 limit  以及查询方法selectByExample 中 新增分页方法
+  roleMapper 及 permissionMapper 中同样 如此
+  
+  完善 userService |roleSerice | permissionService  增删改查方法
+  
+  添加 comomon方法   validateUtils 用来对 实体进行验证 并且返回字符串结果 
+  
+  添加前台 页面请求地址 |[a/roles] |[a/permissions] 用户请求相应数据
+ 
+ 添加新页面等
+ 日期 :2017-8-1
+ 
+ 
+ 1.添加 private List<Role> children;
+ 
+ 2.Mapper  添加方法 getRoleByPID(Integer id);根据 副级 ID 获取角色 
+  

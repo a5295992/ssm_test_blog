@@ -19,8 +19,9 @@ function init() {
 		console.log("login_01.js line 19执行返回的结果为 :"+result);
 		//登录成功
 		if(result[0]=="0"){
-			window.confirm("登录成功");
-			setTimeout(toAIndex( $aIdex), 2000);
+			setTimeout(function(){
+				window.location.href=$aIdex;
+			}, 200);
 		}else if(result[0]=="1"){
 			$("#err").css("display", "inline-block");
 			$("#err").text(result[1]);
@@ -31,9 +32,7 @@ function init() {
 	});
 	
 	//定时 跳转
-	function toAIndex(url){
-		window.location.href=url;
-	}
+	
 	
 	
 	var changePic = function changePic(){

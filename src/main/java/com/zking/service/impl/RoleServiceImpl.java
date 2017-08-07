@@ -1,5 +1,6 @@
 package com.zking.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Validator;
@@ -21,6 +22,9 @@ import com.zking.service.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+	public static boolean boolean_getchildren =false;
+	
+	public static boolean boolean_getmenus =false;
 	
 	private Logger log = Logger.getLogger(RoleServiceImpl.class);
 	@Autowired
@@ -28,6 +32,7 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Autowired
 	private Validator valitate;
+	
 	@Override
 	public void add(Role t) throws ServiceException {
 		//验证 数据
@@ -81,12 +86,57 @@ public class RoleServiceImpl implements RoleService {
 		Page<Role> page = new Page<Role>(queryCondition.getPageCount(),count,queryCondition.getPageNum());
 		example.setLimit(page.getStart()+","+page.getPageCount());
 		
-		
-		page.setList(roleMapper.selectByExample(example));
-		
+		if(boolean_getmenus){
+			cri.andPRidIsNull();
+		}
+		List<Role> roles= roleMapper.selectByExample(example);
+		//是否需要查子集
+		if(boolean_getchildren){
+			getChildren(roles,getRoles(roles));
+		}
+		page.setList(roles);
 		return page;
 	}
 	
+	/**
+	 * 获取子集
+	 * @param roles
+	 * @param roles2
+	 */
+	private void getChildren(List<Role> parents, List<Role> childrens) {
+		List<Role> tempList = new ArrayList<Role>();
+		for (Role role : parents) {
+			List<Role> child = new ArrayList<Role>();
+			for (Role crole : childrens) {
+				if(role.getRoleId()==crole.getpRid()){
+					child.add(crole);
+				}else {
+					tempList.add(crole);
+				}
+			}
+			if(tempList.size()>0){
+				getChildren(child,tempList);
+			}
+			role.setChildren(child);
+		}
+	}
+	/**
+	 * 获取所有角色数据 排除 父级的id 
+	 * @param roles2 
+	 * @return
+	 */
+	private List<Role> getRoles(List<Role> roles2) {
+		RoleExample example = new RoleExample();
+		List<Integer> ids = new ArrayList<Integer>();
+		for (Role role : roles2) {
+			ids.add(role.getRoleId());
+		}
+		example.createCriteria().andRoleIdNotIn(ids);
+		List<Role> roles= roleMapper.selectByExample(example);
+		return roles;
+	}
+
+
 	private  boolean validate(Role t) throws ServiceException{
 		String result = ValidateUtils.validate(t,valitate);
 		
@@ -99,11 +149,8 @@ public class RoleServiceImpl implements RoleService {
 	}
 	//名字是否 存在
 	private boolean nameExits(Role t) {
-		RoleExample roleExample = new RoleExample();
 		
-		roleExample.createCriteria().andRoleNameEqualTo(t.getRoleName());
-		
-		return (roleMapper.selectByExample(roleExample)!=null)?true:false;
+		return (getRoleByRoleName(t.getRoleName())==null)?false:true;
 	}
 
 	@Override
@@ -113,5 +160,17 @@ public class RoleServiceImpl implements RoleService {
 		
 		cr.andRoleIdIn(id);
 		roleMapper.deleteByExample(example);
+	}
+
+	@Override
+	public Role getRoleByRoleName(String proleName) {
+        RoleExample roleExample = new RoleExample();
+		
+		roleExample.createCriteria().andRoleNameEqualTo(proleName);
+		List <Role> list = roleMapper.selectByExample(roleExample);
+		if(list!=null &&list.size()>0){
+			return list.get(0);
+		}
+		return null;
 	}
 }

@@ -24,7 +24,7 @@
         </div>
 		<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">今天是 2017年7月30日</div>
 		<div data-options="region:'east',split:true" title="消息管理" style="width:180px;">
-			<ul class="easyui-tree" data-options="url:'tree_data1.json',method:'get',animate:true,dnd:true"></ul>
+			<ul class="easyui-tree" data-options="url:'${headpath}/a/roless',method:'get',animate:true,dnd:true"></ul>
 		</div>
 		<div data-options="region:'west',split:true" title="功能" style="width:200px;">
 			<div class="easyui-accordion" data-options="fit:true,border:false">
@@ -74,7 +74,7 @@
 		<div data-options="region:'center',title:'待办事项',iconCls:'icon-ok'">
 			<div class="easyui-tabs" data-options="fit:true,border:false,plain:true" id="tt">
 				<div title="欢迎页" data-options="href:'${headpath }/a/a/welecom'" style="padding:10px"></div>
-				
+									
 			</div>
 		</div>
   </body>
