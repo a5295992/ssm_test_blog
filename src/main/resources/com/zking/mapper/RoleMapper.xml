@@ -283,4 +283,13 @@
   	where 
   	p_rid=#{pRid}
   </select>
+  
+  <select id="getRoleNameByRoleId" resultType="string">
+  		SELECT 
+  		role_name 
+  		FROM 
+  		t_role
+  		WHERE 
+  		role_id=#{roleId}
+  </select>
 </mapper>

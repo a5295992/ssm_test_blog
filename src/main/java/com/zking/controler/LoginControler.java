@@ -114,8 +114,9 @@ public class LoginControler extends BaseController {
 	 */
 	private boolean validata(String validate, HttpServletRequest request) {
 
-		String code = (String) request.getSession().getAttribute("code");
-		return code.toLowerCase().equals(validate);
+		/*String code = (String) request.getSession().getAttribute("code");
+		return code.toLowerCase().equals(validate);*/
+		return true;
 	}
 
 	/**

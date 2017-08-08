@@ -1,0 +1,130 @@
+   ？待测 ：
+   1.这里我们先返回一个equalName，多参数同名的参数，测试返回类型 
+   2.第二个问题比较 奇葩,ui插件的分页功能 ，貌似与我们自己的写的分页对象会有冲突。
+        无论如何都显示不了正确的分页数据。(带研究)    
+
+java 代码部分
+  url: /a  /permission/add
+  		   /permission/dele
+  		   /permission/update
+  		   /permission/search
+  		   
+  1.获取权限列表 A_PERMISSION_SEARCH
+  
+  UserControler 
+       -     getPermissions(page,row , request)
+  param1: page rows 分页
+  param2: like likeName,order orderName ,equal equal 
+  
+  这里我们先返回一个，多参数同名的参数，测试返回类型      ？待测 
+    $('#tt').datagrid('load',{
+		itemid: $('#itemid').val(),
+		productid: $('#productid').val()
+	});
+	创建表单 提交；
+    列表: 
+    网格:class="easyui-datagrid"
+    网格工具栏: toolbar="#tb"
+    分页 按钮: pagination="true"
+    
+    
+  功能描述:
+  
+  1.登录后台管理页面、
+  2.点击 用户管理
+  3.点击权限管理 --获取权限列表
+  4.输入 查询字段 ，点击查询按钮，查询相应数据
+  5.点击分页按钮，浏览相应数据
+  6.增加一条数据
+           批量增加多条数据
+  7.修改一条数据
+          批量修改多条数据
+  8.删除一条数据
+          批量删除多条数据
+  
+  实现:
+  2.点击权限管理 --获取权限列表 (完成)
+    1.修改 index.jsp >>addTab("权限管理",'/a/permission/search')
+    2.进入permission_list.jsp 复制 role_list.jsp 内容
+                修改标题，修改地址url
+  
+	 [需要五个数据 :perId,perName,roleName(role),deleFlag,perCm
+	   修改  getPermissions 方法.
+	   问题: 我们 返回的数据中并没有roleName 这一说。
+	   因此我们解决方案是.在实体类中添加roleName 这一字段.
+	   或者我们来添加role(com.zking.entity.Role) 字段
+	   保险起见，我们使用前者。
+	   测试成功: src/test/ TestPermissionService /testGetBean();
+	   成功之后我们再来测试后者。]
+  3.实现 查询功能 (完成)
+      1).添加查询按钮
+      2).暂时 按 权限名查询 和角色ID 查询
+      3).com_detail.js 添加 do_permission_search().方法
+   	测试 查询功能:
+          出现bug:
+          点击查询 ，没有数据
+          分析:前台 传来空值
+          测试结果是: 
+       1.permissionMapper 中的perName LikeName 方法,默认是不加上%%
+         的 所以你的like 后面接的数据 需要手动拼接上一个%%符号，还有就是 WebUtils方法为''默认返回的
+         是的null 所以 如果不做非空处理的时候，拼接上的将会是 %null%
+         前台 的做了 如果搜索内容为空的情况下 重新加载这个页面 :window.location.reload();
+        
+      2.第二个问题比较 奇葩,ui插件的分页功能 ，貌似与我们自己的写的分页对象会有冲突。
+         无论如何都显示不了正确的分页数据。(带研究)
+        
+ 4.实现 添加功能，以及批量添加功能
+     1) 单个添加功能:(完成)
+	      前端 :弹窗 
+	      需要添加的字段:perName(权限名),perMs(别名),roleId(必填),
+	  bug: 当时没有记录
+  
+      2)批量添加功能实现：(待完成)
+	     分析：
+	            要实现批量功能，首先我们要创建缓存区，
+	    在原有基础上， 我们创建多个表单。
+	    方式1:按顺序 提交五次
+	    方式2:五次同时提交
+	 
+ 5. 修改，批量修改
+     1)修改功能
+                  需求:点击选中记录，点击修改按钮，进行修改。
+                            可修改的字段有:  权限名[perName],所属角色[roleId],权限别名[perMs]
+       1.java
+       URL: /permission/update_view
+            /permission/update
+       新增方法 1. permission_update_view(Integer id): 进入修改页面
+         2. permission_update(Permission permission).修改 数据
+         
+       2.js
+        依旧 使用 ajax提交数据返回 json数组
+        问题:
+        1.我们的ajax请求貌似只能使用 get方式
+        2.我们的get方式，貌似不能自动填充参数。
+        3.我们又试图在success方法里面直接return 
+        4.我们试图使用动态添加页面的方式来增加页面。可是某些Js貌似不会生效
+        5.将 String装换成 json的js方式 是JSON.parse() 取值是json['key']
+        
+        
+  6.删除，批量删除 |撤销删除
+  这里我们要用到DataGrid的单选和多选功能
+ 单选: 
+ 多选:
+
+    撤销删除:
+    怎样达到撤销的效果呢，
+    事务:开启jdbc事务,撤销实际上是回滚
+    缓存:删除实际上 是更改数据的状态:让其变得不可用,撤销是将数据状态改为可用
+	  
+   
+  
+      
+   
+   
+   
+   
+   
+      
+   
+   
+      

@@ -3,12 +3,28 @@ package com.zking.commom;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.web.util.WebUtils;
+
 /**
  * 分页条件 内部类 对象
  * 
  * @author Administrator
  */
 public class QueryCondition {
+	//模糊查询 字段定义
+	public static final String LIKE_NAME="likeName";
+	public static final String LIKE_VALUE="like";
+	//排序定义
+	public static final String ORDER_NAME="orderName";
+	public static final String ORDER_VALUE="order";
+	//指定字段定义
+	public static final String EQUALNAME ="equalName";
+	public static final String EQUALVALUE="equal";
+	
+	public static final int    DEFAULT_COUNT=10;
+	
 	private Integer pageNum; // 当前页
 	private Integer pageCount;// 分页条数
 	private Map<String, Object> condition;
@@ -99,7 +115,7 @@ public class QueryCondition {
 	}
 	public QueryCondition(Integer pageNum, Integer pageCount) {
 		this.pageNum = (pageNum==null)?0:pageNum;
-		this.pageCount = (pageCount==null||pageCount==0)?10:pageCount;
+		this.pageCount = (pageCount==null||pageCount==0)?DEFAULT_COUNT:pageCount;
 	}
 	public QueryCondition(Integer pageNum, Integer pageCount,
 			Map<String, Object> condition) {
@@ -109,6 +125,29 @@ public class QueryCondition {
 		this.condition = condition;
 	}
 
+	public QueryCondition(Integer page, Integer rows, String likeName,
+            String like, String orderBy,
+			String order) {
+		this.pageNum=page;
+		this.pageCount=rows;
+		this.likeName=likeName;
+		this.likeValue=like;
+		this.orderName=orderBy;
+		this.orderValue=order;
+	}
+	public QueryCondition(Integer page, Integer rows, HttpServletRequest req) {
+		this.pageCount=rows;
+		this.pageNum=page;
+		// 模糊查询 |null
+		this.likeName = WebUtils.getCleanParam(req, QueryCondition.LIKE_NAME);
+		this.likeValue = WebUtils.getCleanParam(req, QueryCondition.LIKE_VALUE);
+
+		// p排序
+		this.orderName = WebUtils.getCleanParam(req, QueryCondition.ORDER_NAME);
+		this.orderValue = WebUtils.getCleanParam(req, QueryCondition.ORDER_VALUE);
+
+		// 条件 |多个条件
+	}
 	public Integer getPageNum() {
 		return pageNum;
 	}

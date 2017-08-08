@@ -23,7 +23,10 @@ public class LocationConstants {
 	
 	public static final String AROLES = "modules/a/user/role_list";
 	public static String AUPDATEROLE ="modules/a/user/add_role";
+	
 	public static final String APERMISSIONS = "modules/a/user/permission_list";
+	
+	public static final String A_PERMISSION_UPDATE = "modules/a/user/update_permission";
 	
 	
 	

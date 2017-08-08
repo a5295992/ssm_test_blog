@@ -27,7 +27,7 @@ public interface BaseService<T> {
 	 * 删除 所有
 	 * @param id
 	 */
-	public void deleAll(List<Integer> id);
+	public int deleAll(List<Integer> id);
 	/**
 	 * 改
 	 * @param id

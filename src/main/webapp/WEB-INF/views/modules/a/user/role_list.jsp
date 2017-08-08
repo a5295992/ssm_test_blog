@@ -7,7 +7,7 @@
 	<script type="text/javascript" src="${statics }/easyUI/jquery.easyui.min.js"></script>
 <div title="角色列表" style="padding:5px;width: 100%;height: 100%" >
 					
-<table id="tttt" title="角色" class="easyui-treegrid" style="width:700px;height:300px"
+<table id="tttt" title="角色" class="easyui-treegrid" style="width:100%;height:100%"
 			url="${headpath }/a/roless"
 			rownumbers="true"
 			idField="id" treeField="text"
@@ -20,7 +20,7 @@
 			<tr>
 				<th field="text" width="250" >角色名</th>
 				<th field="id" width="150" align="right">ID</th>
-				<th field="flag" width="150" align="right">待删标记</th>
+				<th field="deleFlag" width="150" align="right">待删标记</th>
 			</tr>
 		</thead>
 	</table>
@@ -45,7 +45,7 @@
 				
 				<tr>
 					<td>父级角色:</td>
-					<td><select class="easyui-combotree" url="${headpath }/a/roless" name="proleName" style="width:156px;"/></td>
+					<td><select class="easyui-combotree" url="${headpath }/a/roless_list" name="proleName" style="width:156px;"/></td>
 				</tr>
 				<tr>
 					<td> </td>

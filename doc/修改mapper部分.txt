@@ -15,4 +15,8 @@
  1.添加 private List<Role> children;
  
  2.Mapper  添加方法 getRoleByPID(Integer id);根据 副级 ID 获取角色 
+ 
+ 
+ 2017-8-7
+ 1.新增Permission 中 Role角色名
   

@@ -28,18 +28,19 @@ public class Page<T> implements Serializable {
 	 * @param pageNum
 	 *            当前页码数
 	 */
-	public Page(int pageCount, int count, int pageNum) {
+	public Page(int pageCount, int total, int pageNum) {
 		this.pageCount = pageCount;
-		this.count = count;
+		this.total=total;
 		this.pageNum = pageNum;
-		if (count % pageCount == 0) {
-			page = count / pageCount;
+		if (total % pageCount == 0) {
+			page = total / pageCount;
 		} else {
-			page = count / pageCount + 1;
+			page = total / pageCount + 1;
 		}
 		this.start = pageNum * pageCount;
 	}
-
+    private Integer total;
+    
 	private int start;
 
 	private int end;
@@ -48,11 +49,10 @@ public class Page<T> implements Serializable {
 	// 当前页
 	private int pageNum;
 
-	private int count;
 	// 一页显示多少
 	private int pageCount;
 	// 数据集合
-	private List<T> list;
+	private List<T> rows;
 
 	public int getStart() {
 		return start;
@@ -86,14 +86,6 @@ public class Page<T> implements Serializable {
 		this.pageNum = pageNum;
 	}
 
-	public int getCount() {
-		return count;
-	}
-
-	public void setCount(int count) {
-		this.count = count;
-	}
-
 	public int getPageCount() {
 		return pageCount;
 	}
@@ -102,12 +94,22 @@ public class Page<T> implements Serializable {
 		this.pageCount = pageCount;
 	}
 
-	public List<T> getList() {
-		return list;
+	
+
+	public Integer getTotal() {
+		return total;
 	}
 
-	public void setList(List<T> list) {
-		this.list = list;
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
+	public List<T> getRows() {
+		return rows;
+	}
+
+	public void setRows(List<T> rows) {
+		this.rows = rows;
 	}
 
 }

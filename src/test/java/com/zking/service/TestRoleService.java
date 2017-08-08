@@ -18,7 +18,7 @@ private String path = "spring-context.xml";
 	
 	private RoleService roleService;
 	
-	@Before
+//	@Before
 	public void setUp(){
 		app = new ClassPathXmlApplicationContext(path);
 		roleService = app.getBean(RoleService.class);

@@ -32,10 +32,11 @@ public class PermissionServiceImpl implements PermissionService {
 	public void add(Permission t) throws ServiceException {
 		String result = ValidateUtils.validate(t,valitate);
 		if(result.startsWith("0")){
-			if(!namesExist(t)){
+			if(namesExist(t)){
 				permissionMapper.insert(t);
+			}else{
+				throw new ServiceException(fault+"权限已存在");
 			}
-			throw new ServiceException(fault+"权限已存在");
 		}else{
 			throw new ServiceException(result);
 		}
@@ -72,7 +73,11 @@ public class PermissionServiceImpl implements PermissionService {
 		PermissionExample example = new PermissionExample();
 		Criteria cri = example.createCriteria();
 		if(!StringUtils.isNullOrEmpty(queryCondition.getLikeName())){
-			cri.andPerNameLike(queryCondition.getLikeValue()+"");
+			if(queryCondition.getLikeValue()==null){
+				cri.andPerNameLike("%%");
+			}else{
+				cri.andPerNameLike("%"+queryCondition.getLikeValue()+"%");
+			}
 		}
 		Integer count = (int) permissionMapper.countByExample(example);
 		
@@ -94,18 +99,18 @@ public class PermissionServiceImpl implements PermissionService {
 		example.setLimit(page.getStart()+","+page.getPageCount());
 		
 		
-		page.setList(permissionMapper.selectByExample(example));
+		page.setRows(permissionMapper.selectByExample(example));
 		
 		return page;
 	}
 	
 	
 	@Override
-	public void deleAll(List<Integer> id) {
+	public int deleAll(List<Integer> id) {
 		PermissionExample example = new PermissionExample();
 		Criteria  cr=  example.createCriteria();
 		
 		cr.andPerIdIn(id);
-		permissionMapper.deleteByExample(example);
+		return permissionMapper.deleteByExample(example);
 	}
 }

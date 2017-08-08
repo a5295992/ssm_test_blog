@@ -8,7 +8,7 @@
 <div title="DataGrid" style="padding:5px;width: 100%;height: 100%" >
 					
 <table class="easyui-datagrid"
-		style="width:100%;height:300px"
+		style="width:100%;height:100%"
 		url="${headpath }/a/userss"
 		title="用户信息" iconCls="icon-search"
 		rownumbers="true" pagination="true">

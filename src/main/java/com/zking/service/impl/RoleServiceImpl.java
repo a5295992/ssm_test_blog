@@ -94,7 +94,7 @@ public class RoleServiceImpl implements RoleService {
 		if(boolean_getchildren){
 			getChildren(roles,getRoles(roles));
 		}
-		page.setList(roles);
+		page.setRows(roles);
 		return page;
 	}
 	
@@ -154,12 +154,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void deleAll(List<Integer> id) {
+	public int deleAll(List<Integer> id) {
 		RoleExample example = new RoleExample();
 		Criteria  cr=  example.createCriteria();
 		
 		cr.andRoleIdIn(id);
-		roleMapper.deleteByExample(example);
+		return roleMapper.deleteByExample(example);
 	}
 
 	@Override

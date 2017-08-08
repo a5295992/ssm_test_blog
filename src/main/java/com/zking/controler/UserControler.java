@@ -1,10 +1,14 @@
 package com.zking.controler;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -81,13 +85,6 @@ public class UserControler extends BaseController {
 		return new ModelAndView(LocationConstants.AUSERS);
 	}
 
-	/**
-	 * 用户 POST 请求 从表单传来查询条件 返回 相应数据
-	 * 
-	 * @param queryCondition
-	 *            自定义 查询条件对象
-	 * @return 返回 相应数据和页面
-	 */
 	@ResponseBody
 	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
 	@RequestMapping(value = AnRequest.AUSERSS, produces = "text/html;charset=UTF-8;")
@@ -99,7 +96,7 @@ public class UserControler extends BaseController {
 		QueryCondition queryCondition = new QueryCondition(page, rows);
 		// 权限验证通过
 		Page<User> users = userService.getPage(queryCondition);
-		JSONArray json = JSONArray.fromObject(users.getList());
+		JSONObject json = JSONObject.fromObject(users);
 		return json.toString();
 	}
 
@@ -122,11 +119,7 @@ public class UserControler extends BaseController {
 		}
 	}
 
-	/**
-	 * 角色列表
-	 * 
-	 * @return
-	 */
+	/** --------RoleManager--- 角色Start----##########################---- **/
 	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
 	@RequestMapping(value = AnRequest.AROLES, method = RequestMethod.GET)
 	public ModelAndView getRoles() {
@@ -134,40 +127,45 @@ public class UserControler extends BaseController {
 		return new ModelAndView(LocationConstants.AROLES);
 	}
 
-	/**
-	 * 角色列表 数据
-	 * 
-	 * @param page
-	 *            当前页码
-	 * @param rows
-	 *            分页行数
-	 * @return
-	 */
 	@ResponseBody
 	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
 	@RequestMapping(value = AnRequest.AROLESS, produces = "text/html;charset=UTF-8;")
-	public String getRoles(Integer page, Integer rows) {
+	public String getRoles(Integer page, Integer rows,HttpServletRequest  req) {
 		details(page, rows);
 		page = this.page;
 		rows = this.rows;
 		// 分页插件 开始 是1
-		QueryCondition queryCondition = new QueryCondition(page, rows);
+		QueryCondition queryCondition = new QueryCondition(page, rows,req);
 		// 权限验证通过
 		RoleServiceImpl.boolean_getchildren = true;
 		RoleServiceImpl.boolean_getmenus = true;
 		Page<Role> roles = roleService.getPage(queryCondition);
 		// 创建树 节点
-		JSONArray json = JSONArray.fromObject(roles.getList());
-
+		JSONObject json = JSONObject.fromObject(roles);
+		return json.toString();
+	}
+	/**
+	 * 用来获取角色列表
+	 * @param page
+	 * @param rows
+	 * @param req
+	 * @return
+	 */
+	@ResponseBody
+	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
+	@RequestMapping(value = AnRequest.AROLESS_LIST, produces = "text/html;charset=UTF-8;")
+	public String getRolesList() {
+		// 分页插件 开始 是1
+		QueryCondition queryCondition = new QueryCondition(0, 20);
+		// 权限验证通过
+		RoleServiceImpl.boolean_getchildren = true;
+		RoleServiceImpl.boolean_getmenus = true;
+		Page<Role> roles = roleService.getPage(queryCondition);
+		// 创建树 节点
+		JSONArray json = JSONArray.fromObject(roles.getRows());
 		return json.toString();
 	}
 
-	/**
-	 * 添加
-	 * 
-	 * @param role
-	 * @return
-	 */
 	@ResponseBody
 	@RequestMapping(value = AnRequest.AADDROLE, produces = "text/html;charset=UTF-8;")
 	public String addRole(HttpServletRequest req) {
@@ -179,72 +177,59 @@ public class UserControler extends BaseController {
 
 		role.setRoleName(roleName);
 		role.setDeleFlag(0);
-		if(!StringUtils.isNullOrEmpty(proleName)){
+		if (!StringUtils.isNullOrEmpty(proleName)) {
 			role.setpRid(Integer.parseInt(proleName));
 		}
 		role.setpRid(Integer.parseInt(proleName));
-		/*if (!StringUtils.isNullOrEmpty(proleName)) {
-			Role prole = roleService.getRoleByRoleName(proleName);
-			if (prole != null) {
-				role.setpRid(prole.getRoleId());
-			}
-		}*/
 		try {
 			roleService.add(role);
 		} catch (ServiceException e) {
 			log.debug(e.getMessage());
 			return e.getMessage();
-		}catch (Exception e) {
-			return fault+e.getMessage();
+		} catch (Exception e) {
+			return fault + e.getMessage();
 		}
 		return success + "1";
 	}
 
-	/**
-	 * 添加
-	 * 
-	 * @param role
-	 * @return
-	 */
 	@ResponseBody
-	@RequestMapping(value = AnRequest.AUPDATEROLE+"/{roleId}", produces = "text/html;charset=UTF-8;")
+	@RequestMapping(value = AnRequest.AUPDATEROLE + "/{roleId}", produces = "text/html;charset=UTF-8;")
 	public ModelAndView updateRole(@PathVariable Integer roleId) {
 		Role role = roleService.getBean(roleId);
-		
-		QueryCondition queryCondition =new QueryCondition(0,50);
-		Page<Role> page = roleService.getPage(queryCondition );
-		List<Role> prole =null;
-		if(page!=null){
-			prole = page.getList();
+
+		QueryCondition queryCondition = new QueryCondition(0, 50);
+		Page<Role> page = roleService.getPage(queryCondition);
+		List<Role> prole = null;
+		if (page != null) {
+			prole = page.getRows();
 		}
-		return new ModelAndView(LocationConstants.AUPDATEROLE).addObject("role",role)
-				.addObject("prole",prole);
+		return new ModelAndView(LocationConstants.AUPDATEROLE).addObject(
+				"role", role).addObject("prole", prole);
 	}
-	
+
 	@ResponseBody
-	@RequestMapping(value = AnRequest.AUPDATEROLEAJAX, 
-	       produces = "text/html;charset=UTF-8;")
+	@RequestMapping(value = AnRequest.AUPDATEROLEAJAX, produces = "text/html;charset=UTF-8;")
 	public String updateRoleAjax(HttpServletRequest req) {
 		Integer roleId = 0;
 		String roleid = req.getParameter("roleId");
-		if(!StringUtils.isNullOrEmpty(roleid)){
+		if (!StringUtils.isNullOrEmpty(roleid)) {
 			roleId = Integer.parseInt(roleid);
 		}
 		String roleName = WebUtils.getCleanParam(req, "roleName");
-		
-		String proleName= WebUtils.getCleanParam(req, "proleName");
-		
-		Role  role = roleService.getBean(roleId);
-		if(role != null){
-			
-			if(!role.getRoleName().equals(roleName)){
+
+		String proleName = WebUtils.getCleanParam(req, "proleName");
+
+		Role role = roleService.getBean(roleId);
+		if (role != null) {
+
+			if (!role.getRoleName().equals(roleName)) {
 				role.setRoleName(roleName);
 			}
-			if(proleName!=null&&!role.getpRid().equals(proleName)){
+			if (proleName != null && !role.getpRid().equals(proleName)) {
 				role.setpRid(Integer.parseInt(proleName));
 			}
 		}
-		log.info("更改后的role 为 "+ role.getRoleName());
+		log.info("更改后的role 为 " + role.getRoleName());
 		try {
 			roleService.update(role);
 		} catch (ServiceException e) {
@@ -253,17 +238,11 @@ public class UserControler extends BaseController {
 		return success + "success";
 	}
 
-	/**
-	 * 添加
-	 * 
-	 * @param role
-	 * @return
-	 */
 	@ResponseBody
 	@RequestMapping(value = AnRequest.ADELEROLE, produces = "text/html;charset=UTF-8;")
 	public String deleRole(HttpServletRequest req) {
-		String roleIds = req.getParameter("roleId"); 
-		if(!StringUtils.isNullOrEmpty(roleIds)){
+		String roleIds = req.getParameter("roleId");
+		if (!StringUtils.isNullOrEmpty(roleIds)) {
 			try {
 				roleService.delete(Integer.parseInt(roleIds));
 			} catch (ServiceException e) {
@@ -271,10 +250,11 @@ public class UserControler extends BaseController {
 			}
 			return success + "success";
 		}
-		return fault+"操作未成功";
+		return fault + "操作未成功";
 	}
 
 	/**
+	 * --------PemissionManager--- 权限Start----##########################----/
 	 * 
 	 * @return
 	 */
@@ -285,30 +265,106 @@ public class UserControler extends BaseController {
 		return new ModelAndView(LocationConstants.APERMISSIONS);
 	}
 
-	/**
-	 * 权限 数据
-	 * 
-	 * @param page
-	 *            页码
-	 * @param rows
-	 *            分页行数
-	 * @return
-	 */
 	@ResponseBody
 	@RequiresRoles(value = PermissionAndRoleConstant.ADMIN)
-	@RequestMapping(value = AnRequest.APERMISSIONSS, produces = "text/html;charset=UTF-8;")
-	public String getPermissions(Integer page, Integer rows) {
+	@RequestMapping(value = AnRequest.A_PERMISSION_SEARCH, produces = "text/html;charset=UTF-8;")
+	public String getPermissions(Integer page, Integer rows,
+			HttpServletRequest req) {
+		// 分页
 		details(page, rows);
 		page = this.page;
 		rows = this.rows;
 		// 分页插件 开始 是1
-		QueryCondition queryCondition = new QueryCondition(page, rows);
+		QueryCondition queryCondition = new QueryCondition(page, rows, req);
 		// 权限验证通过
 		Page<Permission> permissions = permissionService
 				.getPage(queryCondition);
-
-		JSONArray json = JSONArray.fromObject(permissions);
-		log.debug(json);
+		JSONObject json = JSONObject.fromObject(permissions);
 		return json.toString();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = AnRequest.A_PERMISSION_ADD, produces = "text/html;charset=UTF-8;")
+	public String addPermission(Permission permission) {
+		permission.setDeleFlag(0);
+		try {
+			permissionService.add(permission);
+		} catch (ServiceException e) {
+			log.error(e);
+			return e.getMessage();
+		}
+
+		return success + "操作成功";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = AnRequest.A_PERMISSION_UPDATE_VIEW, produces = "text/html;charset=UTF-8;")
+	public String update_view(HttpServletRequest req) {
+
+		String perIds = req.getParameter("perId");
+		if (!StringUtils.isNullOrEmpty(perIds)) {
+			Permission permission = permissionService.getBean(Integer
+					.parseInt(perIds));
+			JSONObject json = JSONObject.fromObject(permission);
+			return json.toString();
+		}
+		return "";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = AnRequest.A_PERMISSION_UPDATE, produces = "text/html;charset=UTF-8;")
+	public String permission_update(HttpServletRequest req) {
+		// 要修改此项
+		String perIds = req.getParameter("perId");
+		String perName = req.getParameter("perName");
+		String perMs = req.getParameter("perMs");
+		String roleId = req.getParameter("roleId");
+		
+		if (!StringUtils.isNullOrEmpty(perIds)) {
+			Permission permission = permissionService.getBean(Integer
+					.parseInt(perIds));
+
+			permission.setPerMs(perMs);
+			if (!StringUtils.isNullOrEmpty(perName)) {
+				permission.setPerName(perName);
+			} else {
+				return fault + "权限名不能为空";
+			}
+
+			if (!StringUtils.isNullOrEmpty(roleId)) {
+				permission.setRoleId(Integer.parseInt(roleId));
+			} else {
+				return fault + "角色名不能为空";
+			}
+			try {
+				permissionService.update(permission);
+			} catch (ServiceException e) {
+				e.printStackTrace();
+				return e.getMessage();
+			}
+		} else {
+			return fault + "未选中内容";
+		}
+		return success;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@ResponseBody
+	@RequestMapping(value = AnRequest.A_PERMISSION_DELETE, 
+	produces = "text/html;charset=UTF-8;")
+	public String permission_delete(HttpServletRequest req) {
+		
+		String data = req.getParameter("data");
+		JSONObject json = JSONObject.fromObject(data);
+		List<Integer> ids = new ArrayList<Integer>();
+		
+		Map<String,Integer> map = (Map<String,Integer>)json;
+		for (Entry<String, Integer> integer : map.entrySet()) {
+			ids.add(integer.getValue());
+		}
+		
+		int result = permissionService.deleAll(ids);
+		
+		return success+result;
 	}
 }

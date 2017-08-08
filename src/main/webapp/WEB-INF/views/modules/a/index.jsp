@@ -31,13 +31,13 @@
 				<div title="用户管理" style="padding:10px;">
 	                
 					<a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-search"
-	                onclick="addTab('用户列表','${headpath}/a/users')"> 查看用户信息</a>
+	                onclick="addTab('用户列表','${headpath}/a/users')"> 查看用户信息</a><br>
 	                <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-lock"
-	                onclick="addTab('google','${headpath}/a/permissions')"> 权限管理</a>
+	                onclick="addTab('google','${headpath}/a/roles')"> 角色管理</a><br>
 	                <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-commenting"
-	                onclick="addTab('google','${headpath}/a/roles')"> 角色管理</a>
+	                onclick="addTab('权限管理','${headpath}/a/permissions')"> 权限管理</a><br>
 	                <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-hourglass-1"
-	                onclick="addTab('google','http://www.google.com')">用户申请待批</a>
+	                onclick="addTab('google','http://www.google.com')">用户申请待批</a><br>
                 </div>
 				<div title="博客管理"  style="padding:10px;">
 					发表博客

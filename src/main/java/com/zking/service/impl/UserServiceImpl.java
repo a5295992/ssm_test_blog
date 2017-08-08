@@ -84,17 +84,17 @@ public class UserServiceImpl implements com.zking.service.UserService {
 		UserExample userExample2 = new UserExample();
 		userExample2.setLimit(page.getStart()+","+page.getPageCount());
 		List<User> userList = userMapper.selectByExample(userExample2);
-		page.setList(userList);
+		page.setRows(userList);
 		
 		return page;
 	}
 
 	@Override
-	public void deleAll(List<Integer> id) {
+	public int deleAll(List<Integer> id) {
 		UserExample example = new UserExample();
 		Criteria  cr=  example.createCriteria();
 		
 		cr.andUserIdIn(id);
-		userMapper.deleteByExample(example);
+		return userMapper.deleteByExample(example);
 	}
 }
