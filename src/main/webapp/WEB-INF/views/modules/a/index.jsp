@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ page import="com.zking.constants.PermissionAndRoleConstant" %>
+<%@ page import="com.zking.constants.AnRequest" %>
 
 <%@ include file="../../global/global.jsp"%>
 
@@ -40,14 +41,14 @@
 	                onclick="addTab('google','http://www.google.com')">用户申请待批</a><br>
                 </div>
 				<div title="博客管理"  style="padding:10px;">
-					发表博客
-                    删除博客
-                    查看评论
+			    <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-pencil-square-o">写博客</a><br />
 				</div>
                 <div title="个人中心" style="padding:10px" data-options="selected:true">
 					
-                    <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-pencil-square-o">写博客</a><br />
-                  	<a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-weibo">我的博客</a><br />
+                   <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-edit"
+	                onclick="addTab('新建文章','${headpath}/a/blog/new/edit')"> 写博客</a><br>
+                  	<a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-weibo"
+                  	onclick="addTab('我的博客','${headpath}/a/blog/query_list')">我的博客</a><br />
                     <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-commenting-o">我的评论</a><br />
                     <a href="#" class="easyui-linkbutton" plain="true" iconCls="fa fa-comments">我的消息</a><br />
                     <a href="#" class="easyui-linkbutton" plain="true" iconCls="icon-edit">修改密码</a><br />

@@ -29,5 +29,9 @@ public class LocationConstants {
 	public static final String A_PERMISSION_UPDATE = "modules/a/user/update_permission";
 	
 	
+	public static final String A_BLOG_EDIT = "modules/a/blog/blog_edit";
+	public static final String A_BLOG_QUERY_VIEW = "modules/a/blog/list_blog_view";
+	public static final String A_BLOG_QUERY_LIST = "modules/a/blog/list_blog";
+	
 	
 }

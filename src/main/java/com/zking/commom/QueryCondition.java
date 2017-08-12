@@ -31,7 +31,7 @@ public class QueryCondition {
 	
 	//自定义 查询条件 通过表单提交
 	private List<String> equalName; //可能有多个 
-	private List<Object> equalValue;
+	private List<Integer> equalValue;
 	
 	private String likeName;
 	private Object likeValue; //模糊查询
@@ -53,11 +53,11 @@ public class QueryCondition {
 	public void setEqualName(List<String> equalName) {
 		this.equalName = equalName;
 	}
-	public List<Object> getEqualValue() {
+	public List<Integer> getEqualValue() {
 		return equalValue;
 	}
-	public void setEqualValue(List<Object> equalValue) {
-		this.equalValue = equalValue;
+	public void setEqualValue(List<Integer> list) {
+		this.equalValue = list;
 	}
 	public String getLikeName() {
 		return likeName;
@@ -113,9 +113,9 @@ public class QueryCondition {
 	public void put(String name,Object obj){
 		this.condition.put(name, obj);
 	}
-	public QueryCondition(Integer pageNum, Integer pageCount) {
-		this.pageNum = (pageNum==null)?0:pageNum;
-		this.pageCount = (pageCount==null||pageCount==0)?DEFAULT_COUNT:pageCount;
+	public QueryCondition(Integer page, Integer rows) {
+		this.pageNum = (page==null)?0:(page-1);
+		this.pageCount = (rows==null||rows==0)?DEFAULT_COUNT:rows;
 	}
 	public QueryCondition(Integer pageNum, Integer pageCount,
 			Map<String, Object> condition) {
@@ -136,8 +136,8 @@ public class QueryCondition {
 		this.orderValue=order;
 	}
 	public QueryCondition(Integer page, Integer rows, HttpServletRequest req) {
-		this.pageCount=rows;
-		this.pageNum=page;
+		this.pageNum = (page==null)?0:(page-1);
+		this.pageCount = (rows==null||rows==0)?DEFAULT_COUNT:rows;
 		// 模糊查询 |null
 		this.likeName = WebUtils.getCleanParam(req, QueryCondition.LIKE_NAME);
 		this.likeValue = WebUtils.getCleanParam(req, QueryCondition.LIKE_VALUE);

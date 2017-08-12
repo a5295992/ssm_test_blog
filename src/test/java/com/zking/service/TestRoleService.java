@@ -30,7 +30,7 @@ private String path = "spring-context.xml";
 		QueryCondition queryCondition = new QueryCondition(0,10);
 		RoleServiceImpl.boolean_getmenus=true;
 		RoleServiceImpl.boolean_getchildren=true;
-		List <Role> list = roleService.getPage(queryCondition).getList();
+		List <Role> list = roleService.getPage(queryCondition).getRows();
 		
 		for (Role role : list) {
 			System.out.println(role.getText());
@@ -79,7 +79,7 @@ private String path = "spring-context.xml";
 		QueryCondition queryCondition = new QueryCondition(0,10);
 		RoleServiceImpl.boolean_getmenus=true;
 		RoleServiceImpl.boolean_getchildren=true;
-		List <Role> list = roleService.getPage(queryCondition).getList();
+		List <Role> list = roleService.getPage(queryCondition).getRows();
 		
 		for (Role role : list) {
 			System.out.println(role.getText());

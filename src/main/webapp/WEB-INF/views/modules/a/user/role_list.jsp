@@ -1,5 +1,4 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ include file="../../../global/global.jsp"%>
 <%@ include file ="../default/commom.jsp" %>
 	<link rel="stylesheet" type="text/css" href="${statics }/easyUI/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="${statics }/easyUI/themes/icon.css">

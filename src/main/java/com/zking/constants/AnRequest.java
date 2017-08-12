@@ -32,5 +32,19 @@ public class AnRequest {
 	public static final String A_PERMISSION_UPDATE = "/permission/update";
 	public static final String A_PERMISSION_UPDATE_VIEW = "/permission/update_view";
 	public static final String A_PERMISSION_DELETE = "/permission/delete";
-
+	
+	
+	//A_BLOG
+	public static final String A_BLOG    = "/a/blog";
+	public static final String A_BLOG_QUERY    = "/query";
+	public static final String A_BLOG_QUERY_LIST ="/query_list";
+	public static final String A_BLOG_QUERY_VIEW    = "/query/view";
+	public static final String A_BLOG_NEW_EDIT = "/new/edit";
+	public static final String A_BLOG_EDIT_UPDATE = "/edit";
+	public static final String A_BLOG_EDIT_DELETE = "/delete";
+	public static final String A_BLOG_EDIT_ADD = "/new/add";
+	
+	//AA_BLOG_CATEGORY_MANAGE
+	public static final String A_BLOG_CATEGORY_MANAGE_QUERY="/category/query";
+	
 }

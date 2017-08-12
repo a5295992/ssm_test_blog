@@ -32,7 +32,7 @@ public class TestPermissionService {
 		queryCondition.setLikeValue("%菜单%");
 		Page<Permission> pege = permissionService.getPage(queryCondition );
 		
-		for (Permission iterable_element : pege.getList()) {
+		for (Permission iterable_element : pege.getRows()) {
 			System.out.println(iterable_element.getPerName());
 			System.out.println(iterable_element.getRoleName()+":getRoleName");
 		}

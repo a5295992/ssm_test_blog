@@ -39,7 +39,7 @@ public class TestValidata {
 		Page<User> page = userService.getPage(queryCondition );
 		
 		if(page!=null){
-			for (User  user : page.getList()) {
+			for (User  user : page.getRows()) {
 				System.out.println(user);
 			}
 		}

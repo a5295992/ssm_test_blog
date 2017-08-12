@@ -4,7 +4,7 @@
 <!--jstl表达式  -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--jstl 函数  -->
-<%@ taglib prefix="func"  uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions"%>
 <!--安全验证标签  -->
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 

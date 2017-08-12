@@ -20,7 +20,7 @@
        </context:component-scan>
        
        <!--引用数据源文件  druid.properties-->
-       <context:property-placeholder location="classpath:druid.properties"/>
+       <context:property-placeholder location="classpath:ssm_test_blog.properties"/>
        <!-- 配置数据源 -->
        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
        		 <property name="url" value="${jdbc.url}"></property>
